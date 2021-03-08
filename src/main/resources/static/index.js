@@ -1,6 +1,11 @@
 window.addEventListener('load', function(e) {
 var container = document.getElementById("idCatalogo");
 var searchInput = document.getElementById("id__search__input");
+var searchButton = document.getElementById("id__search__button")
+searchButton.addEventListener('click', e => {
+    e.preventDefault();
+    fetchProducts(searchInput.value)
+ });
 searchInput.addEventListener('keydown', e => {
     if(e.key=='Enter') {
         e.preventDefault();
