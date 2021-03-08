@@ -24,7 +24,7 @@ public class Product {
     @Column(name = "discount")
     private Integer discount;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category")
     private Category category;
 

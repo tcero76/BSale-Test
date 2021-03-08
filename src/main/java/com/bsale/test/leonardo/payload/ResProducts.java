@@ -8,20 +8,18 @@ public class ResProducts {
     private final Integer discount;
     private final String url_image;
     private final String name;
-    private String category;
-    private Integer id;
+    private final Integer idcategory;
+    private final String category;
+    private final Integer id;
 
     public ResProducts(Product product) {
         this.id = product.getId();
         this.name = product.getName();
         this.category = product.getCategory().getName();
+        this.idcategory = product.getCategory().getId();
         this.price = product.getPrice();
         this.discount = product.getDiscount();
         this.url_image = product.getUrl_image();
-    }
-
-    public String getName() {
-        return name;
     }
 
     public Float getPrice() {
@@ -36,19 +34,19 @@ public class ResProducts {
         return url_image;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public Integer getIdcategory() {
+        return idcategory;
+    }
+
     public String getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
     public Integer getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 }

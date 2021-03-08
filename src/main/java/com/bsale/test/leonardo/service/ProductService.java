@@ -1,13 +1,13 @@
 package com.bsale.test.leonardo.service;
 
-import com.bsale.test.leonardo.model.Product;
 
-import java.util.Arrays;
+import com.bsale.test.leonardo.payload.ResProducts;
+
 import java.util.List;
 
 public interface ProductService {
 
-    List<Product> findAll();
+    List<ResProducts> findAll();
 
-    List<Product> findByName(String name);
+    List<ResProducts> findByName(String name);
 }

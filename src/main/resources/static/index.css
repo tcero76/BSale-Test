@@ -18,11 +18,23 @@
     --line: 1px solid var(--color-grey-light-2);
 }
 
-.container {
+.catalogo {
     margin: 0 1rem;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    align-items: center;
+}
+
+.container__category {
+    font-size:1.5rem;
+    color: var(--color-grey-dark-2);
+    margin: 1rem 1rem;
+}
+
+.page {
+    font-size: 5rem;
+    font-stretch: ultra-condensed;
 }
 
 .search {
@@ -33,7 +45,7 @@
 }
 
 .search__input {
-        color: var(--color-grey-dark-2);
+        color: var(--color-grey-dark-1);
         font-size: 1.2rem;
         background-color: var(--color-grey-light-2);
         border: none;
@@ -42,6 +54,10 @@
         width: 90%;
         margin-right: -3.25rem;
  }
+
+.header__logo {
+    font-size:2rem;
+}
 
  .search__input:focus {
     outline: none;
@@ -69,24 +85,43 @@
     border-bottom: var(--line);
     position: sticky;
     font-size: 1.4rem;
-    height: 3rem;
     top:0;
+    height: 4rem;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
-.user-nav__icon {
-    height: 2.25rem;
-    width: 2.25rem;
-    fill: var(--color-grey-dark-2);
+.shopping-cart__icon {
+    margin: 0 1rem;
+    height: 2rem;
+    width: 2rem;
+    opacity: .3;
+    background-image: url('icon/shopping-cart.svg');
+}
+
+.card__icon {
+    width: 70%;
+    text-align: right;
+    display: inline-block;
+    transform: translateY(10px);
+}
+
+.card__add__icon {
+    margin: 0 1rem;
+    height: 2rem;
+    width: 2rem;
+    opacity: .3;
+    background-image: url('icon/add-solid.svg');
 }
 
 .card {
     margin: 0.7rem 0;
     width:200px;
     border: var(--line);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .card__image {
-    height: 250px;
+    height: 200px;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -97,11 +132,32 @@
 }
 
 .card__detail {
-    margin: 0 .7rem;
+    margin: .4rem 1rem;
     border-top: var(--line);
-        padding: .7rem 0
+    padding: .5rem 0;
 }
 
 .card__product-name {
 
+}
+
+.search__icon {
+    height: 1.5rem;
+    width: 1.5rem;
+    opacity: .3;
+    background-image: url('/icon/search.svg');
+}
+
+.previousPage__icon-box {
+    height: 4.25rem;
+    width: 2.25rem;
+    background-image: url('/icon/cheveron-left.svg');
+    background-repeat: no-repeat;
+}
+
+.nextPage__icon-box {
+    height: 4.25rem;
+    width: 2.25rem;
+    background-image: url('/icon/cheveron-right.svg');
+    background-repeat: no-repeat;
 }
