@@ -20,7 +20,7 @@
     --shadow-dark: 0 2rem 6rem rgba(0,0,0,.3);
     --shadow-light: 0 2rem 5rem rgba(0,0,0,.06);
 
-    --line: 1px solid var(--color-grey-light-2);
+    --line: 1px solid var(--color-grey-light-3);
 }
 
 body {
@@ -29,7 +29,7 @@ body {
 
 .header {
     font-family: 'Lato', sans-serif;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: var(--color-grey-dark-1);
     background-color: var(--color-primary);
     display: flex;
@@ -39,7 +39,7 @@ body {
     border: var(--line-header);
     position: sticky;
     top:0;
-    height: 5rem;
+    height: 3.5rem;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     z-index:9;
 }
@@ -49,10 +49,47 @@ body {
     font-size:2rem;
 }
 
+.search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search__input {
+        font-family: 'Lato', sans-serif;
+        font-weight: 100;
+        color: var(--color-grey-dark-1);
+        font-size: 0.8rem;
+        background-color: var(--color-grey-light-2);
+        border: none;
+        padding: .7rem 2rem;
+        border-radius: 20px;
+        width: 90%;
+        margin-right: -3.25rem;
+ }
+
+ .search__input:focus {
+    outline: none;
+}
+
+ .search__button {
+    border: none;
+}
+
+.search__button:focus {
+    outline: none;
+}
+
+ .search__icon {
+    height: 2rem;
+    width: 2rem;
+    fill: var(--color-grey-dark-3);
+}
+
 .alert--info {
     font-family: 'Lato', sans-serif;
     font-weight: 100;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: var(--color-grey-dark-1);
     text-align: center;
     display: block;
@@ -90,47 +127,10 @@ body {
     font-stretch: ultra-condensed;
 }
 
-.search {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.search__input {
-        font-family: 'Lato', sans-serif;
-        font-weight: 100;
-        color: var(--color-grey-dark-1);
-        font-size: 1.2rem;
-        background-color: var(--color-grey-light-2);
-        border: none;
-        padding: .7rem 2rem;
-        border-radius: 20px;
-        width: 90%;
-        margin-right: -3.25rem;
- }
-
- .search__input:focus {
-    outline: none;
-}
-
- .search__button {
-    border: none;
-}
-
-.search__button:focus {
-    outline: none;
-}
-
- .search__icon {
-    height: 2rem;
-    width: 2rem;
-    fill: var(--color-grey-dark-3);
-}
-
 .shopping-cart__icon {
     margin: 0 1rem;
-    height: 2rem;
-    width: 2rem;
+    height: 1.5rem;
+    width: 1.5rem;
     opacity: .3;
     background-image: url('icon/shopping-cart.svg');
 }

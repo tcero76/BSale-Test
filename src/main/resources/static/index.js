@@ -60,8 +60,8 @@ function renderCatalogo(data) {
     container.innerHTML = '';
     state.categories = Array.from(new Set(data.map(d=>d.category)))
         .sort((c1,c2) => {
-            if(c1<c2) return 1;
-            if(c2>c2) return -1;
+            if(c1<c2) {return -1};
+            if(c2>c2) {return 1};
             return 0;
         })
         .map(c=>({ name:c,
