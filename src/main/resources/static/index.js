@@ -19,10 +19,6 @@ window.addEventListener('load', function(e) {
     fetchProducts("");
 });
 
-function card(d) {
-    return `<div class="card"><div class="card__image" style="background-image:url('${d.url_image}')"></div><div class="card__name"><label class="card__product-name">${d.name}</label></div><div class="card__detail">$ ${d.price.toFixed(0)}<span class="card__icon"><svg class="card__add__icon"></svg></span></div></div>`;
-}
-
 function fetchProducts(input) {
     if(input=="") {
         fetch(`/products`)
@@ -53,6 +49,7 @@ function renderCatalogo(data) {
     state.products = data;
     renderCategoria();
 }
+
 function renderCategoria() {
     state.categories
        .forEach(c=> {
@@ -61,6 +58,7 @@ function renderCategoria() {
            renderCategoryItem(c);
        })
 }
+
 function renderCategoryItem(c) {
    var category = document.getElementById(`category${c.id}`);
    category.innerHTML = renderIconLeft(c);
@@ -77,9 +75,13 @@ function renderCategoryItem(c) {
        })
        .slice((c.page-1)*nItems,c.page*nItems>=c.totalItems?c.totalItems:c.page*nItems)
        .forEach(d => {
-           category.innerHTML += card(d);
+           category.innerHTML += renderCard(d);
        });
    category.innerHTML += renderIconRight(c);
+}
+
+function renderCard(d) {
+    return `<div class="card"><div class="card__image" style="background-image:url('${d.url_image}')"></div><div class="card__name"><label class="card__product-name">${d.name}</label></div><div class="card__detail">$ ${d.price.toFixed(0)}<span class="card__icon"><svg class="card__add__icon"></svg></span></div></div>`;
 }
 
 function renderIconLeft(c) {
