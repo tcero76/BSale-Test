@@ -63,7 +63,7 @@ function renderCategoria() {
 }
 function renderCategoryItem(c) {
    var category = document.getElementById(`category${c.id}`);
-   category.innerHTML = iconLeft(c);
+   category.innerHTML = renderIconLeft(c);
    state.products
        .filter(d => d.category == c.name)
        .sort((d1,d2) => {
@@ -79,14 +79,15 @@ function renderCategoryItem(c) {
        .forEach(d => {
            category.innerHTML += card(d);
        });
-   category.innerHTML += iconRight(c);
+   category.innerHTML += renderIconRight(c);
 }
 
-function iconLeft(c) {
+function renderIconLeft(c) {
     var opacity = (c.page>1)?"1":"0";
     return `<div id="previousPage${c.id}" style="opacity:${opacity} " onclick="onClickPrevious(event, ${c.id})" class="previousPage__icon-box${(c.page>=c.npage)?' disable':''}"></div>`
 }
-function iconRight(c) {
+
+function renderIconRight(c) {
     var opacity = (c.page<=c.npage && c.totalItems>c.page*nItems)?"1":"0";
     return `<div id="nextPage${c.id}" style="opacity:${opacity}" onclick="onClickNext(event, ${c.id})" class="nextPage__icon-box${(c.page>=c.npage)?' disable':''}"></div>`
 }
