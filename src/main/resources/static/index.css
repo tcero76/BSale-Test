@@ -192,9 +192,18 @@ body {
     background-repeat: no-repeat;
 }
 
+
+.previousPage__icon-box:hover {
+    cursor: pointer;
+}
+
 .nextPage__icon-box {
     height: 4.25rem;
     width: 2.25rem;
     background-image: url('/icon/cheveron-right.svg');
     background-repeat: no-repeat;
+}
+
+.nextPage__icon-box {
+    cursor: pointer;
 }

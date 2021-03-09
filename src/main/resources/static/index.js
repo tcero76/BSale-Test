@@ -108,7 +108,7 @@ function renderCategoryItem(c) {
 
 // Renderiza una carta con información de un producto.
 function renderCard(d) {
-    return `<div class="card"><div class="card__image" style="background-image:url('${d.url_image}')"></div><div class="card__name"><label class="card__product-name">${d.name}</label></div><div class="card__detail">$ ${d.price.toFixed(0)}<span class="card__icon"><svg class="card__add__icon"></svg></span></div></div>`;
+    return `<div class="card"><div class="card__image" style="background-image:url('${d.url_image}')"></div><div class="card__name"><label class="card__product-name">${d.name}</label></div><div class="card__detail">$ ${separadorMiles(d.price)}<span class="card__icon"><svg class="card__add__icon"></svg></span></div></div>`;
 }
 
 // Renderiza ícono de paginación izquierdo.
@@ -123,7 +123,7 @@ function renderIconRight(c) {
     return `<div id="nextPage${c.id}" style="opacity:${opacity}" onclick="onClickNext(event, ${c.id})" class="nextPage__icon-box${(c.page>=c.npage)?' disable':''}"></div>`
 }
 
-// Función ejecutada en el evento Click de la flecha previo
+// Función ejecutada en el evento Click de la flecha previo.
 function onClickPrevious(e,id) {
     let c = state.categories.find(c=>c.id==id)
     var previous = document.getElementById(`previousPage${c.id}`)
@@ -131,10 +131,15 @@ function onClickPrevious(e,id) {
     renderCategoryItem(c);
 }
 
-// Función ejecutada en el evento Click de la flecha siguiente
+// Función ejecutada en el evento Click de la flecha siguiente.
 function onClickNext(e,id){
     let c = state.categories.find(c=>c.id==id)
     var next = document.getElementById(`nextPage${c.id}`)
     if(c.page<=c.npage && c.totalItems>c.page*nItems) c.page++
     renderCategoryItem(c);
+}
+
+// Función regex que entrega números con separador(".") de miles.
+function separadorMiles(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
