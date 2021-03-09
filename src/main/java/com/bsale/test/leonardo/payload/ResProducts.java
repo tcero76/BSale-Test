@@ -2,6 +2,7 @@ package com.bsale.test.leonardo.payload;
 
 import com.bsale.test.leonardo.model.Product;
 
+// Clase para entregar respuesta a la
 public class ResProducts {
 
     private final Float price;

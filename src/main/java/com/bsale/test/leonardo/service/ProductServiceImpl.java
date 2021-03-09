@@ -15,6 +15,7 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepo productRepo;
 
+//    Servicio que entrega listado completo de productos.
     @Override
     @Transactional
     public List<ResProducts> findAll() {
@@ -23,6 +24,7 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
+    //    Servicio que entrega listado de productos filtrado por nombre.
     @Override
     @Transactional
     public List<ResProducts> findByName(String name) {

@@ -8,9 +8,11 @@ import java.util.List;
 
 public interface ProductRepo extends JpaRepository<Product,Integer> {
 
+//    Listado de productos completos con Categorías. Optimizada con Hibernate Statistics.
     @Query("select p,c from Product p left join p.category c")
     public List<Product> findAllWithCategory();
 
+    //    Listado de productos filtrados por nombre con Categorías. Optimizada con Hibernate Statistics.
     @Query("select p,c from Product p left join p.category c where p.name like %:name%")
     public List<Product> findByNameContainsWithCategory(String name);
 }

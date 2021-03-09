@@ -16,12 +16,14 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+//    Procesa requests a productos totales.
     @GetMapping("/products")
     private ResponseEntity<List<ResProducts>> findAll() {
         List<ResProducts> res = productService.findAll();
         return ResponseEntity.ok(res);
     }
 
+//    Procesa requests a produtos filtrados por nombre.
     @GetMapping("/{name}/products")
     private ResponseEntity<List<ResProducts>> findByName(@PathVariable("name") String name) {
         List<ResProducts> res =  productService.findByName(name);
