@@ -1,7 +1,7 @@
 // Estado de la paginación
 var state = {categories: [], products: [], selectPrecio: 0}
-// Container principal donde se aloja el catálogo.
-var container;
+// Container principal donde se aloja el catálogo e ícono para indicar que está procesando.
+var container, loading;
 // Número de ítems por fila
 const nItems = 3;
 
@@ -9,6 +9,7 @@ const nItems = 3;
 // valores iniciales.
 window.addEventListener('load', function(e) {
     container = document.getElementById("idcontainer");
+    loading = document.getElementById("idloading")
     var searchButton = document.getElementById("id__search__button");
     var searchInput = document.getElementById("id__search__input");
     var selectPrecio = document.getElementById("id__precios__select");
@@ -31,16 +32,21 @@ window.addEventListener('load', function(e) {
 
 //  request de los productos filtrados por nombre
 function getProductsByNameAndByPrice(input) {
+    loading.style.display = "block";
     fetch(`/products?name=${input.toUpperCase()}&&price=${this.state.selectPrecio}`)
         .then(res => res.json())
         .then(data => {
+            loading.style.display = "none";
             if(data.length==0) {
                 renderInfo("No hay coincidencias");
                 return;
             }
             return renderCatalogo(data)
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            loading.style.display = "none";
+            console.log(err)
+        })
 }
 
 // render mensaje de respuesta
