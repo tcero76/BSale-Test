@@ -45,4 +45,18 @@ public class LeonardoApplicationTests {
 		assert(products.size()==13);
 	}
 
+	@Test
+	public void findByNameAndMinPrice() {
+		List<ResProducts> products = productService.findByNameAndByMinPrice("RON",10000f);
+		System.out.printf("Número de RON encontrados con mínimo 10.000: %d%n", products.size());
+		assert(products.size()==1);
+	}
+
+	@Test
+	public void findByMinPrice() {
+		List<ResProducts> products = productService.findByMinPrice(10000f);
+		System.out.printf("Número de productos encontrados con mínimo 10.000: %d%n", products.size());
+		assert(products.size()==4);
+	}
+
 }

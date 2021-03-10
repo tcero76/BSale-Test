@@ -16,13 +16,16 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepo productRepo;
 
 
+    //    Servicio que entrega listado de productos completo.
     @Override
+    @Transactional
     public List<ResProducts> findAll() {
         return productRepo.findAllWithCategory().stream()
                 .map(ResProducts::new)
                 .collect(Collectors.toList());
     }
 
+    //    Servicio que entrega listado de productos filtrado por nombre.
     @Override
     @Transactional
     public List<ResProducts> findByName(String name) {
@@ -31,6 +34,7 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
+    //    Servicio que entrega listado de productos filtrado por categoría de precio.
     @Override
     @Transactional
     public List<ResProducts> findByPrice(Float minPrice, Float maxPrice) {
@@ -40,10 +44,31 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
+    //    Servicio que entrega listado de productos filtrado por nombre y categoría de precio.
     @Override
     @Transactional
     public List<ResProducts> findByNameAndByPrice(String name, Float minPrice, Float maxPrice) {
         return productRepo.findByNameContainsAndPriceWithCategory(name,minPrice,maxPrice)
+                .stream()
+                .map(ResProducts::new)
+                .collect(Collectors.toList());
+    }
+
+    //    Servicio que entrega listado de productos filtrado por nombre y categoría de precio mínimo.
+    @Override
+    @Transactional
+    public List<ResProducts> findByNameAndByMinPrice(String name, Float minPrice) {
+        return productRepo.findByNameContainsAndMinPriceWithCategory(name,minPrice)
+                .stream()
+                .map(ResProducts::new)
+                .collect(Collectors.toList());
+    }
+
+    //    Servicio que entrega listado de productos filtrado por categoría de precio mínimo.
+    @Override
+    @Transactional
+    public List<ResProducts> findByMinPrice(Float minPrice) {
+        return productRepo.findByMinPriceWithCategory(minPrice)
                 .stream()
                 .map(ResProducts::new)
                 .collect(Collectors.toList());

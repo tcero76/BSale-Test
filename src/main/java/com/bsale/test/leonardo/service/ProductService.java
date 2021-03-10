@@ -17,4 +17,10 @@ public interface ProductService {
 
     //    Servicio que entrega listado de productos filtrado por nombre y categoría de precio.
     public List<ResProducts> findByNameAndByPrice(String name, Float minPrice, Float maxPrice);
+
+    //    Servicio que entrega listado de productos filtrado por nombre y categoría de precio mínimo.
+    public List<ResProducts> findByNameAndByMinPrice(String name, Float minPrice);
+
+    //    Servicio que entrega listado de productos filtrado por categoría de precio mínimo.
+    public List<ResProducts> findByMinPrice(Float minPrice);
 }

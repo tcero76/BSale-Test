@@ -14,15 +14,16 @@ window.addEventListener('load', function(e) {
     var selectPrecio = document.getElementById("id__precios__select");
     selectPrecio.addEventListener('change', e => {
         state.selectPrecio = e.target.value;
+        getProductsByNameAndByPrice(searchInput.value)
     })
     searchButton.addEventListener('click', e => {
         e.preventDefault();
-        getProductsByName(searchInput.value)
+        getProductsByNameAndByPrice(searchInput.value)
      });
     searchInput.addEventListener('keydown', e => {
         if(e.key=='Enter') {
             e.preventDefault();
-            getProductsByName(searchInput.value)
+            getProductsByNameAndByPrice(searchInput.value)
         }
     });
     getProductsByNameAndByPrice("");
@@ -30,7 +31,7 @@ window.addEventListener('load', function(e) {
 
 //  request de los productos filtrados por nombre
 function getProductsByNameAndByPrice(input) {
-    fetch(`/${input.toUpperCase()}/${state.selectPrecio}/products`)
+    fetch(`/products?name=${input.toUpperCase()}&&price=${this.state.selectPrecio}`)
         .then(res => res.json())
         .then(data => {
             if(data.length==0) {
