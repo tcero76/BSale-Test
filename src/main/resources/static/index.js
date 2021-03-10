@@ -1,5 +1,5 @@
 // Estado de la paginación
-var state = {categories: [], products: []}
+var state = {categories: [], products: [], selectPrecio: 0}
 // Container principal donde se aloja el catálogo.
 var container;
 // Número de ítems por fila
@@ -11,6 +11,10 @@ window.addEventListener('load', function(e) {
     container = document.getElementById("idcontainer");
     var searchButton = document.getElementById("id__search__button");
     var searchInput = document.getElementById("id__search__input");
+    var selectPrecio = document.getElementById("id__precios__select");
+    selectPrecio.addEventListener('change', e => {
+        state.selectPrecio = e.target.value;
+    })
     searchButton.addEventListener('click', e => {
         e.preventDefault();
         getProductsByName(searchInput.value)
@@ -21,33 +25,21 @@ window.addEventListener('load', function(e) {
             getProductsByName(searchInput.value)
         }
     });
-    getProducts();
+    getProductsByNameAndByPrice("");
 });
 
-//  request de  todos los productos.
-function getProducts() {
-    fetch(`/products`)
-        .then(res => res.json())
-        .then(data => renderCatalogo(data))
-        .catch(err => console.log(err))
-}
-
 //  request de los productos filtrados por nombre
-function getProductsByName(input) {
-    if(input==""){
-        getProducts();
-    } else {
-        fetch(`/${input.toUpperCase()}/products/`)
-            .then(res => res.json())
-            .then(data => {
-                if(data.length==0) {
-                    renderInfo("No hay coincidencias");
-                    return;
-                }
-                return renderCatalogo(data)
-            })
-            .catch(err => console.log(err))
-    }
+function getProductsByNameAndByPrice(input) {
+    fetch(`/${input.toUpperCase()}/${state.selectPrecio}/products`)
+        .then(res => res.json())
+        .then(data => {
+            if(data.length==0) {
+                renderInfo("No hay coincidencias");
+                return;
+            }
+            return renderCatalogo(data)
+        })
+        .catch(err => console.log(err))
 }
 
 // render mensaje de respuesta

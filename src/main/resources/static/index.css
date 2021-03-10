@@ -102,6 +102,24 @@ body {
     border: var(--line-alert-info);
 }
 
+.precios {
+    margin: 1rem 1rem;
+}
+
+.precios__label {
+    font-size: 1rem;
+}
+
+.precios__select {
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    outline: none;
+    border: none;
+    background-color: var(--color-grey-light-1);
+    border: var(--line);
+}
+
 .catalogo {
     font-family: 'Lato', sans-serif;
     font-weight: 400;
@@ -136,7 +154,7 @@ body {
 }
 
 .card__icon {
-    width: 70%;
+    width: 60%;
     text-align: right;
     display: inline-block;
     transform: translateY(10px);
@@ -172,10 +190,6 @@ body {
     margin: .4rem 1rem;
     border-top: var(--line);
     padding: .5rem 0;
-}
-
-.card__product-name {
-
 }
 
 .search__icon {
