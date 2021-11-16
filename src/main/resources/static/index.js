@@ -1,9 +1,26 @@
 // Estado de la paginación
-var state = {categories: [], products: [], selectPrecio: 0}
+var state = {categories: [], products: [], selectPrecio: "todos", selectCategory: 0}
 // Container principal donde se aloja el catálogo e ícono para indicar que está procesando.
 var container, loading;
 // Número de ítems por fila
 const nItems = 3;
+
+function renderOptionsCategory(selectCategory) {
+    fetch('/category', {method: 'OPTIONS'})
+        .then(response => response.json())
+        .then(res => {
+            var optNull = document.createElement('option');
+            optNull.value = 0;
+            optNull.innerHTML = 'Todos';
+            selectCategory.appendChild(optNull);
+            res.forEach(cat => {
+                var opt = document.createElement('option');
+                opt.value = cat.idCategory;
+                opt.innerHTML = cat.name;
+                selectCategory.appendChild(opt);
+            })
+        });
+}
 
 // Listener inicial. Se asignan funciones al input de búsqueda y se setean 
 // valores iniciales.
@@ -13,14 +30,16 @@ window.addEventListener('load', function(e) {
     var searchButton = document.getElementById("id__search__button");
     var searchInput = document.getElementById("id__search__input");
     var selectPrecio = document.getElementById("id__precios__select");
+    var selectCategory = document.getElementById("id__category__select");
+    renderOptionsCategory(selectCategory);
+    selectCategory.addEventListener('change', e => {
+        state.selectCategory = e.target.value;
+        getProductsByNameAndByPrice(searchInput.value)
+    });
     selectPrecio.addEventListener('change', e => {
         state.selectPrecio = e.target.value;
         getProductsByNameAndByPrice(searchInput.value)
-    })
-    searchButton.addEventListener('click', e => {
-        e.preventDefault();
-        getProductsByNameAndByPrice(searchInput.value)
-     });
+    });
     searchInput.addEventListener('keydown', e => {
         if(e.key=='Enter') {
             e.preventDefault();
@@ -28,12 +47,12 @@ window.addEventListener('load', function(e) {
         }
     });
     getProductsByNameAndByPrice("");
-});
+})
 
 //  request de los productos filtrados por nombre
 function getProductsByNameAndByPrice(input) {
     loading.style.display = "block";
-    fetch(`/products?name=${input.toUpperCase()}&&price=${this.state.selectPrecio}`)
+    fetch(`/products?name=${input.toUpperCase()}&price=${this.state.selectPrecio}&category=${this.state.selectCategory}`)
         .then(res => res.json())
         .then(data => {
             loading.style.display = "none";
@@ -51,7 +70,11 @@ function getProductsByNameAndByPrice(input) {
 
 // render mensaje de respuesta
 function renderInfo(msg) {
-    container.innerHTML = `<div class="alert--info">${msg}</div>`;
+    container.innerHTML = `<div class="alert--info">
+                                <div class="alert alert-info" role="alert">
+                                    ${msg}
+                                </div>
+                            </div>`;
 }
 
 // renderiza el catálogo de productos.
@@ -77,7 +100,7 @@ function renderCatalogo(data) {
 function renderCategoria() {
     state.categories
        .forEach(c=> {
-           container.innerHTML += `<H2 class="container__category">${c.name.toUpperCase()}</H2>`
+           container.innerHTML += `<H1 class="container__category">${c.name.toUpperCase()}</H1>`
            container.innerHTML += `<div id="category${c.id}" class="catalogo"></div>`
            renderCategoryItem(c);
        })
@@ -107,7 +130,16 @@ function renderCategoryItem(c) {
 
 // Renderiza una carta con información de un producto.
 function renderCard(d) {
-    return `<div class="card"><div class="card__image" style="background-image:url('${d.url_image}')"></div><div class="card__name"><label class="card__product-name">${d.name}</label></div><div class="card__detail">$ ${separadorMiles(d.price)}<span class="card__icon"><svg class="card__add__icon"></svg></span></div></div>`;
+if(d.url_image== null || d.url_image=="") {
+    d.url_image="/img/SinImagen.jpg";
+}
+return `<div class="card">
+            <img src='${d.url_image}' class="card-img-top" alt="Imagen no Disponible">
+            <div class="card-body">
+                <h5 class="card-title">${d.name}</h5>
+                <a href="#" class="btn btn-primary">$ ${separadorMiles(d.price)}</a>
+              </div>
+        </div>`;
 }
 
 // Renderiza ícono de paginación izquierdo.

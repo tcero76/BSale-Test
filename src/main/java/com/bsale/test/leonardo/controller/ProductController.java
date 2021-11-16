@@ -1,14 +1,19 @@
 package com.bsale.test.leonardo.controller;
 
+import com.bsale.test.leonardo.model.Category;
+import com.bsale.test.leonardo.model.Product;
+import com.bsale.test.leonardo.payload.ResCategory;
 import com.bsale.test.leonardo.payload.ResProducts;
+import com.bsale.test.leonardo.search.*;
+import com.bsale.test.leonardo.service.CategoryService;
 import com.bsale.test.leonardo.service.ProductService;
+import com.bsale.test.leonardo.util.Precios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class ProductController {
@@ -16,41 +21,58 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-//    Procesa requests a produtos filtrados por nombre y por categorías de precio.
+    @Autowired
+    private Filter<Product> filter;
+
+    @Autowired
+    private CategoryService categoryService;
+
+    //    Procesa requests a produtos filtrados por nombre y por categorías de precio.
     @GetMapping("/products")
     private ResponseEntity<List<ResProducts>> findByName(@RequestParam("name") String name,
-                                                         @RequestParam("price") Integer selectPrice) {
-        // Identifica los límites de cada categoría de precios.
-        List<ResProducts> res = null;
-        Float minPrice = 0f;
-        Float maxPrice = 0f;
-        switch (selectPrice) {
-            case 1:
-                maxPrice = 5000f;
-                break;
-            case 2:
-                minPrice = 5000f;
-                maxPrice = 10000f;
-                break;
-            case 3:
-                minPrice = 10000f;
+                                                         @RequestParam("price") Precios selectPrice,
+                                                         @RequestParam("category") Integer idcategory) {
+        // método destinado a entregar los productos filtrados según los criterios enviados en la request.
+//        List<ResProducts> res = find(name,selectPrice);
+        Category category = null;
+        if(idcategory!=0) {
+            category = categoryService.findById(idcategory);
         }
 
-        //Identifica el servicio que se debe utilizar para obtener los datos, por defecto extrae el listado completo.
-        if(!name.equals("") && selectPrice.equals(0)) {
-            res =  productService.findByName(name);
-        } else if(!name.equals("") && selectPrice.equals(3)){
-            res =  productService.findByNameAndByMinPrice(name,minPrice);
-        } else if(!name.equals("") && (selectPrice.equals(1) || selectPrice.equals(2))){
-            res =  productService.findByNameAndByPrice(name,minPrice,maxPrice);
-        } else if(name.equals("") && selectPrice.equals(3)){
-            res =  productService.findByMinPrice(minPrice);
-        } else if(name.equals("") && (selectPrice.equals(1) || selectPrice.equals(2))){
-            res =  productService.findByPrice(minPrice,maxPrice);
-        } else {
-            res =  productService.findAll();
-        }
+        List<ResProducts> res = filter.filter(productService.findAll(),
+                        new AndSpecification<>(
+                                new CatalogSpecification(category),
+                                new AndSpecification<>(
+                                        new PriceSpecification(selectPrice),
+                                        new NameSpecification(name)
+                                )
+                            )
+                        )
+                .map(ResProducts::new).collect(Collectors.toList());
         return ResponseEntity.ok(res);
     }
 
+    @RequestMapping(value = "/category", method = RequestMethod.OPTIONS)
+    private ResponseEntity<List<ResCategory>> getCategory() {
+        return ResponseEntity.ok(categoryService.findAll().stream()
+                .map(ResCategory::new)
+                .collect(Collectors.toList()));
+    }
+
+//    private List<Product> find(String name, Precios selectPrice) {
+//        //Identifica el servicio que se debe utilizar para obtener los datos, por defecto extrae el listado completo.
+//        if(!name.equals("") && selectPrice==Precios.todos) {
+//            return productService.findByName(name);
+//        } else if(!name.equals("") && selectPrice==Precios.alto){
+//            return productService.findByNameAndByMinPrice(name,limites.get(selectPrice)[0]);
+//        } else if(!name.equals("") && (selectPrice==Precios.bajo || selectPrice==Precios.medio)){
+//            return  productService.findByNameAndByPrice(name,limites.get(selectPrice));
+//        } else if(name.equals("") && selectPrice==Precios.alto){
+//            return productService.findByMinPrice(limites.get(selectPrice)[0]);
+//        } else if(name.equals("") && (selectPrice==Precios.bajo || selectPrice==Precios.medio)){
+//            return productService.findByPrice(limites.get(selectPrice));
+//        } else {
+//            return productService.findAll();
+//        }
+//    }
 }

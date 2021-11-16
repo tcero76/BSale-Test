@@ -1,26 +1,26 @@
 package com.bsale.test.leonardo.service;
 
-import com.bsale.test.leonardo.payload.ResProducts;
+import com.bsale.test.leonardo.model.Product;
 
 import java.util.List;
 
 public interface ProductService {
 
     //    Servicio que entrega listado de productos completo.
-    public List<ResProducts> findAll();
+    public List<Product> findAll();
 
     //    Servicio que entrega listado de productos filtrado por nombre.
-    public List<ResProducts> findByName(String name);
+    public List<Product> findByName(String name);
 
     //    Servicio que entrega listado de productos filtrado por categoría de precio.
-    public List<ResProducts> findByPrice(Float minPrice, Float maxPrice);
+    public List<Product> findByPrice(float[] limites);
 
     //    Servicio que entrega listado de productos filtrado por nombre y categoría de precio.
-    public List<ResProducts> findByNameAndByPrice(String name, Float minPrice, Float maxPrice);
+    public List<Product> findByNameAndByPrice(String name, float[] limites);
 
     //    Servicio que entrega listado de productos filtrado por nombre y categoría de precio mínimo.
-    public List<ResProducts> findByNameAndByMinPrice(String name, Float minPrice);
+    public List<Product> findByNameAndByMinPrice(String name, float minPrice);
 
     //    Servicio que entrega listado de productos filtrado por categoría de precio mínimo.
-    public List<ResProducts> findByMinPrice(Float minPrice);
+    public List<Product> findByMinPrice(Float minPrice);
 }

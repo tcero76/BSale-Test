@@ -1,6 +1,6 @@
 package com.bsale.test.leonardo.service;
 
-import com.bsale.test.leonardo.payload.ResProducts;
+import com.bsale.test.leonardo.model.Product;
 import com.bsale.test.leonardo.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,58 +19,42 @@ public class ProductServiceImpl implements ProductService {
     //    Servicio que entrega listado de productos completo.
     @Override
     @Transactional
-    public List<ResProducts> findAll() {
-        return productRepo.findAllWithCategory().stream()
-                .map(ResProducts::new)
-                .collect(Collectors.toList());
+    public List<Product> findAll() {
+        return productRepo.findAllWithCategory();
     }
 
     //    Servicio que entrega listado de productos filtrado por nombre.
     @Override
     @Transactional
-    public List<ResProducts> findByName(String name) {
-        return productRepo.findByNameContainsWithCategory(name).stream()
-                .map(ResProducts::new)
-                .collect(Collectors.toList());
+    public List<Product> findByName(String name) {
+        return productRepo.findByNameContainsWithCategory(name);
     }
 
     //    Servicio que entrega listado de productos filtrado por categoría de precio.
     @Override
     @Transactional
-    public List<ResProducts> findByPrice(Float minPrice, Float maxPrice) {
-        return productRepo.findByPriceWithCategory(minPrice, maxPrice)
-                .stream()
-                .map(ResProducts::new)
-                .collect(Collectors.toList());
+    public List<Product> findByPrice(float[] limites) {
+        return productRepo.findByPriceWithCategory(limites[0], limites[1]);
     }
 
     //    Servicio que entrega listado de productos filtrado por nombre y categoría de precio.
     @Override
     @Transactional
-    public List<ResProducts> findByNameAndByPrice(String name, Float minPrice, Float maxPrice) {
-        return productRepo.findByNameContainsAndPriceWithCategory(name,minPrice,maxPrice)
-                .stream()
-                .map(ResProducts::new)
-                .collect(Collectors.toList());
+    public List<Product> findByNameAndByPrice(String name, float[] limites) {
+        return productRepo.findByNameContainsAndPriceWithCategory(name,limites[0],limites[1]);
     }
 
     //    Servicio que entrega listado de productos filtrado por nombre y categoría de precio mínimo.
     @Override
     @Transactional
-    public List<ResProducts> findByNameAndByMinPrice(String name, Float minPrice) {
-        return productRepo.findByNameContainsAndMinPriceWithCategory(name,minPrice)
-                .stream()
-                .map(ResProducts::new)
-                .collect(Collectors.toList());
+    public List<Product> findByNameAndByMinPrice(String name, float minPrice) {
+        return productRepo.findByNameContainsAndMinPriceWithCategory(name,minPrice);
     }
 
     //    Servicio que entrega listado de productos filtrado por categoría de precio mínimo.
     @Override
     @Transactional
-    public List<ResProducts> findByMinPrice(Float minPrice) {
-        return productRepo.findByMinPriceWithCategory(minPrice)
-                .stream()
-                .map(ResProducts::new)
-                .collect(Collectors.toList());
+    public List<Product> findByMinPrice(Float minPrice) {
+        return productRepo.findByMinPriceWithCategory(minPrice);
     }
 }

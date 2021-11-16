@@ -93,6 +93,7 @@ body {
     transform: translate(-50%, -50%);
     background-color: transparent;
     display: none;
+    z-index: 100;
 }
 
 .loading__img {
@@ -101,19 +102,14 @@ body {
 }
 
 .alert--info {
-    font-family: 'Lato', sans-serif;
     font-weight: 100;
     font-size: 1rem;
-    color: var(--color-grey-dark-1);
     text-align: center;
     display: block;
     border-radius: 10px;
     margin: 10% auto;
     padding: 2rem 1rem;
     width: 30%;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-    background-color: var(--color-alert-info-1);
-    border: var(--line-alert-info);
 }
 
 .precios {
