@@ -32,8 +32,8 @@ public class ProductController {
     private ResponseEntity<List<ResProducts>> findByName(@RequestParam("name") String name,
                                                          @RequestParam("price") Precios selectPrice,
                                                          @RequestParam("category") Integer idcategory) {
-
         // método destinado a entregar los productos filtrados según los criterios enviados en la request.
+//        List<ResProducts> res = find(name,selectPrice);
         Category category = null;
         if(idcategory!=0) {
             category = categoryService.findById(idcategory);
@@ -58,4 +58,21 @@ public class ProductController {
                 .map(ResCategory::new)
                 .collect(Collectors.toList()));
     }
+
+//    private List<Product> find(String name, Precios selectPrice) {
+//        //Identifica el servicio que se debe utilizar para obtener los datos, por defecto extrae el listado completo.
+//        if(!name.equals("") && selectPrice==Precios.todos) {
+//            return productService.findByName(name);
+//        } else if(!name.equals("") && selectPrice==Precios.alto){
+//            return productService.findByNameAndByMinPrice(name,limites.get(selectPrice)[0]);
+//        } else if(!name.equals("") && (selectPrice==Precios.bajo || selectPrice==Precios.medio)){
+//            return  productService.findByNameAndByPrice(name,limites.get(selectPrice));
+//        } else if(name.equals("") && selectPrice==Precios.alto){
+//            return productService.findByMinPrice(limites.get(selectPrice)[0]);
+//        } else if(name.equals("") && (selectPrice==Precios.bajo || selectPrice==Precios.medio)){
+//            return productService.findByPrice(limites.get(selectPrice));
+//        } else {
+//            return productService.findAll();
+//        }
+//    }
 }
