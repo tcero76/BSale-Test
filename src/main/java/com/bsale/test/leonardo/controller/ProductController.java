@@ -32,8 +32,8 @@ public class ProductController {
     private ResponseEntity<List<ResProducts>> findByName(@RequestParam("name") String name,
                                                          @RequestParam("price") Precios selectPrice,
                                                          @RequestParam("category") Integer idcategory) {
+
         // método destinado a entregar los productos filtrados según los criterios enviados en la request.
-//        List<ResProducts> res = find(name,selectPrice);
         Category category = null;
         if(idcategory!=0) {
             category = categoryService.findById(idcategory);
